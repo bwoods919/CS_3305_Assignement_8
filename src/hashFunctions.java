@@ -13,14 +13,11 @@ public class hashFunctions {
         Scanner input = new Scanner(System.in);
 
         int option;
-
         int[] keys = {1234, 8234, 7867, 1009, 5438, 4312, 3420, 9487, 5418, 5299,
                 5078, 8239, 1208, 5098, 5195, 5329, 4543, 3344, 7698, 5412,
                 5567, 5672, 7934, 1254, 6091, 8732, 3095, 1975, 3843, 5589,
                 5439, 8907, 4097, 3096, 4310, 5298, 9156, 3895, 6673, 7871,
                 5787, 9289, 4553, 7822, 8755, 3398, 6774, 8289, 7665, 5523};
-
-        
 
         while(true) {
 
@@ -36,19 +33,18 @@ public class hashFunctions {
 
             switch (option) {
                 case 1: // Linear Probing
-
-                System.out.println("Index    Keys     Probes");
-                System.out.println("------------------------");
-                HF1(Table,keys);
-                System.out.println("\nSum of probe values = " + sumProbes(Table));
-                    break;
+                    System.out.println("Index    Keys     Probes");
+                    System.out.println("------------------------");
+                    HF1(Table,keys);
+                    System.out.println("\nSum of probe values = " + sumProbes(Table));
+                break;
 
                 case 2: // Quadratic Probing
                     System.out.println("Index    Keys     Probes");
                     System.out.println("------------------------");
                     HF2(Table,keys);
                     System.out.println("\nSum of probe values = " + sumProbes(Table));
-                    break;
+                break;
 
                 case 3: // Double Hashing
 
@@ -56,15 +52,15 @@ public class hashFunctions {
                     System.out.println("------------------------");
                     HF3(Table,keys);
                     System.out.println("\nSum of probe values = " + sumProbes(Table));
-                    break;
+                break;
 
                 case 4: // Student choice
-                    break;
+                break;
 
                 case 5: // Exit
                     input.close();
                     System.exit(255);
-                    break;
+                break;
 
                 default:
                     System.out.println("Invalid option, please select 1 - 5.");

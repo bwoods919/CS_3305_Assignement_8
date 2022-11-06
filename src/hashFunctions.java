@@ -92,8 +92,8 @@ public class hashFunctions {
 
     public static void HF1(int[][] Table,int keys[]){
 
-        for (int i = 0; i < 50; i++)
-        {
+        for (int i = 0; i < 50; i++) {
+
             // Computing the hash value
             int hash_value = keys[i] % 50;
     
@@ -101,9 +101,7 @@ public class hashFunctions {
             if (Table[hash_value][0] == -1){
                 Table[hash_value][0] = keys[i];
     
-            }
-            else
-            {
+            } else {
                 // If there is a collision iterating through all possible quadratic values
                 int probes=0;
                 for (int j = 0; j < 50; j++)
@@ -134,8 +132,8 @@ public class hashFunctions {
                 Table[hash_value][0] = keys[i];
             }
     
-            else
-            {
+            else {
+
                 // If there is a collision iterating through all possible quadratic values
                 int probes=0;
                 for (int j = 0; j < 50; j++)
@@ -152,9 +150,9 @@ public class hashFunctions {
                 }
             }
         }
+
         for(int hash_value = 0; hash_value <50; hash_value++){
             System.out.println(hash_value + "       " + Table[hash_value][0] + "       " + Table[hash_value][1]);
-    
         }
     }
     
@@ -171,10 +169,8 @@ public class hashFunctions {
     
             if (Table[hash_value][0] == -1){
                 Table[hash_value][0] = keys[i];
-            }
-    
-            else
-            {
+            } else {
+
                 int probes=0;
                 int j=1;
                 while (j <= 50) {
@@ -191,14 +187,12 @@ public class hashFunctions {
                 if(j > 50){
                     System.out.println("Unable to hash key " + keys[i] + " to the table ");
                 }
-    
             }
         }
+
         for(int hash_value = 0;hash_value<50;hash_value++){
             if(Table[hash_value][0] != -1)
                 System.out.println(hash_value + "       " + Table[hash_value][0] + "       " + Table[hash_value][1]);
-    
         }
-    
     }
 }

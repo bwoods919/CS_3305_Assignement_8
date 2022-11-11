@@ -12,7 +12,7 @@ public class hashFunctions {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        int option;
+        int option, probes;
         int[] keys = {1234, 8234, 7867, 1009, 5438, 4312, 3420, 9487, 5418, 5299,
                 5078, 8239, 1208, 5098, 5195, 5329, 4543, 3344, 7698, 5412,
                 5567, 5672, 7934, 1254, 6091, 8732, 3095, 1975, 3843, 5589,
@@ -55,6 +55,24 @@ public class hashFunctions {
                 break;
 
                 case 4: // Student choice
+                    for(int i=0; i<keys.length; i++){
+//insert to the hash table
+                        HF4(keys[i], Table);
+                    }
+//calculate the sum of probe values
+                    probes = sumProbes(Table);
+//display the hash-table
+                    System.out.println ("Index Key probes");
+                    System.out.println ("----------------------------");
+                    for(int i=0; i<Table.length; i++){
+                        if(Table[i][0]!=0)
+                            System.out.printf ("%-10d%-10d%d\n", i, Table[i][0], Table[i][1]);
+                        else
+                            System.out.printf ("%-10d%-10s\n", i, "-- Empty --");
+                    }
+                    System.out.println ("----------------------------");
+                    System.out.println ("Sum of probe values = " + probes + " probes");
+                    System.out.println ();
                 break;
 
                 case 5: // Exit
@@ -83,7 +101,7 @@ public class hashFunctions {
 
     public static int sumProbes(int [][]Table){
         int totalProbes=0;
-    
+
         for(int i=0;i<50;i++){
             totalProbes += Table[i][1];
         }
@@ -96,11 +114,11 @@ public class hashFunctions {
 
             // Computing the hash value
             int hash_value = keys[i] % 50;
-    
+
             // Insert in the Table if there is no collision
             if (Table[hash_value][0] == -1){
                 Table[hash_value][0] = keys[i];
-    
+
             } else {
                 // If there is a collision iterating through all possible quadratic values
                 int probes=0;
@@ -119,7 +137,7 @@ public class hashFunctions {
         }
         for(int hash_value = 0;hash_value<50;hash_value++){
             System.out.println(hash_value + "       " + Table[hash_value][0] + "       " + Table[hash_value][1]);
-    
+
         }
     }
 
@@ -131,7 +149,7 @@ public class hashFunctions {
             if (Table[hash_value][0] == -1){
                 Table[hash_value][0] = keys[i];
             }
-    
+
             else {
 
                 // If there is a collision iterating through all possible quadratic values
@@ -155,8 +173,8 @@ public class hashFunctions {
             System.out.println(hash_value + "       " + Table[hash_value][0] + "       " + Table[hash_value][1]);
         }
     }
-    
-    
+
+
     public static int H2(int key){
         return (30-(key%25));
     }
@@ -166,7 +184,7 @@ public class hashFunctions {
         for (int i = 0; i < 50; i++)
         {
             int hash_value = (keys[i] % 50) + ((0) * H2(keys[i]));
-    
+
             if (Table[hash_value][0] == -1){
                 Table[hash_value][0] = keys[i];
             } else {
@@ -178,7 +196,7 @@ public class hashFunctions {
                     if ( hash_value < 50 && Table[hash_value][0] == -1 ) {
                         Table[hash_value][0] = keys[i];
                         Table[hash_value][1] = probes;
-    
+
                         break;
                     }
                     j++;
@@ -196,5 +214,40 @@ public class hashFunctions {
         }
     }
 
-    
+    //method that implements a folding hash function with Double Hashing for collision resolution
+    public static void HF4(int key, int hashTable[][]){
+//folding hash function
+        int sum = 0, m = key;
+        while(m!=0){
+            sum += m%100;
+            m = m/100;
+        }
+        int n = sum % 50;
+//second hashing function
+        int k = 30 - key % 25;
+        int probes = 0;
+        int i = n;
+        int j = 1;
+        boolean fg = false;
+//insert the key into the table with Double Hashing
+        do{
+            if(hashTable[i][0]==0){
+                hashTable[i][0] = key;
+                fg = true;
+                break;
+            }
+            probes++;
+
+            i = (n+j*k)%50;
+            j++;
+        }while(i!=n);
+        if(!fg){
+            System.out.println ("Unable to store key " + key + " to the table");
+            hashTable[i][1] = 0;
+        }
+        else{
+//stores number of probes in the second column of table
+            hashTable[i][1] = probes;
+        }
+    }
 }
